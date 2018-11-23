@@ -1,5 +1,5 @@
 export default class App extends Component {
-  show() {
+  render() {
     return (
       <app>
         <h1>hello world!</h1>
@@ -7,5 +7,12 @@ export default class App extends Component {
     )
   }
 
-  styles = {}
+  styles = {
+    app: {
+      margin: 20
+    },
+    h1: {
+      fontSize: 40
+    }
+  }
 }

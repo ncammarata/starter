@@ -5,9 +5,11 @@ const ogCreateElement = React.createElement.bind(React)
 
 let $viewStyle = null
 
+const noFlex = ["img", "div", "a", "b", "i", "span"]
+
 React.createElement = (type, oldProps, ...children) => {
   const props = { ...oldProps }
-  if (!includes(["img", "div", "a", "b", "span"], type)) {
+  if (!includes(noFlex, type)) {
     if ((props.className || "").indexOf("flexEl") === -1) {
       props.className = `${props.className || ""} flexEl`
     }
@@ -37,13 +39,19 @@ React.createElement = (type, oldProps, ...children) => {
 window.React = React
 
 window.Component = class extends React.Component {
-  render() {
+  constructor() {
+    super()
+    this._render = this.render
+    this.render = this.show
+  }
+
+  show() {
     if (this.styles) {
       $viewStyle = this.styles
     } else {
       $viewStyle = null
     }
 
-    return this.show()
+    return this._render()
   }
 }
